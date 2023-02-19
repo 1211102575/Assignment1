@@ -23,6 +23,7 @@ private:
 public:
     Command();
 
+    void run();
     string input();
     // int getX();
     // int getY();

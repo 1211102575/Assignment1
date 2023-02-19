@@ -10,9 +10,14 @@ Please provide the YouTube link to your [Video Demo](https://youtube.com).
 
 List all the features completed.
 
-1. Cool Feature #1
-2. Cool Feature #2
-3. *add more*
+1. Gameboard
+2. Character Attribute
+3. Alien's Basic Movement and Trails
+4. Zombie's with different attribute
+5. Game objects without effect
+6. Game Control Command(up, down, left, right, help)
+7. Alien's stopping and attack
+8. Zombie's attck
 
 ### To Do
 
