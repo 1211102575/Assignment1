@@ -23,12 +23,8 @@ List all the features completed.
 
 List all the features not yet done. Remove this section if there is no incomplete requirements.
 
-1. Cool Feature #1
-2. *add more*
-
-## Additional Features
-
-Describe the additional features that has been implemented.
+1. Quit
+2. zombie movement
 
 ## Contributions
 
@@ -36,21 +32,23 @@ List down the contribution of each group members.
 
 For example:
 
-### Tony Stark
+### Pang Ding Yuan
 
-1. Randomly generate game board.
-2. *add more*
+1. Gameboard
+2. Character
 
-### Steve Rogers
+### Fam Yi Qi
 
-1. Zombie movement and attack behaviour.
-2. *add more*
-
-### Dr. Strange
-
-1. Implement all game objects.
-2. *add more*
+1. Game Controls
+2. Game Objects
 
 ## Problems Encountered & Solutions
 
-Describe the problems encountered and provide the solutions / plan for the solutions.
+Problem 1 :zombie appears in the middle and replace each other.
+Solution:check by loop through all zombie and if statement. 
+
+Problem 2 : alien cannot go down although we have run thr down command.
+Solution :change alien from row and column from the board to array.
+
+Problem 3 : convert string to integer
+Solution : https://www.freecodecamp.org/news/string-to-int-in-c-how-to-convert-a-string-to-an-integer-example
