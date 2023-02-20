@@ -280,6 +280,7 @@ void Command::arrows(GameBoard &gameboard, int x, int y) {
     int coY = gameboard.getcoY();
     char** mapObj = gameboard.getMapObjects();
     char arrowObj[] = {'^', 'v', '<', '>'};
+    int flagArr = 0; 
     for (int i = 0; i < 4; ++i) {
         if (mapObj[coY - y][x - 1] == arrowObj[i]) {
             string direction;
@@ -313,6 +314,14 @@ void Command::arrows(GameBoard &gameboard, int x, int y) {
                 cout << "Try again.";
             }
             break;
+        }
+        else {
+            flagArr = flagArr + 1;
+            if (flagArr == 4) {
+                cout << "Try again." << endl;
+                pauCle::Pause();
+                pauCle::ClearScreen();
+            }
         }
     }
     flagArrows_ = 0;
@@ -361,6 +370,7 @@ void Command:: gameend(Character &character)
 
 void Command::up(GameBoard &gameboard, Character &character, char** obj)
 {
+    bool flagEnd = 0;
     int *alienAttribute = character.getAlienAttribute() ;
     int **zombieAttribute = character.getZombieAttribute();
     int oriX = alienAttribute[3] - 1;
@@ -475,15 +485,20 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
                     if (getmapobject[x][oriX] == zombie[i]) {
                         if (zombieAttribute[i][0] >= alienAttribute[1]) {
                             character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
-                            gameboard.display();
-                            character.display();
+                            cout << endl << "Alien hits a zombie." << endl;
                             cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
                             cout << "Ending Alien's turn." << endl;
+                            flagEnd = 1;
+                            pauCle::Pause();
+                            pauCle::ClearScreen();
                             break;
                         }
                     }
                 }
-                break;
+                if (flagEnd == 1) {
+                    flagEnd = 0;
+                    break;
+                }
             }
             gameboard.characterOnMap(alienAttribute[3],alienAttribute[4],'#');
             character.setAlienLocation(alienAttribute[3],alienAttribute[4]+1);
@@ -520,15 +535,20 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
                     if (getmapobject[x][oriX] == zombie[i]) {
                         if (zombieAttribute[i][0] >= alienAttribute[1]) {
                             character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
-                            gameboard.display();
-                            character.display();
+                            cout << endl << "Alien hits a zombie." << endl;
                             cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
                             cout << "Ending Alien's turn." << endl;
+                            flagEnd = 1;
+                            pauCle::Pause();
+                            pauCle::ClearScreen();
                             break;
                         }
                     }
                 }
-                break;
+                if (flagEnd == 1) {
+                    flagEnd = 0;
+                    break;
+                }
             }
             gameboard.characterOnMap(alienAttribute[3],alienAttribute[4],'#');
             character.setAlienLocation(alienAttribute[3],alienAttribute[4]+1);
@@ -561,20 +581,25 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
                 break;
             }
             else
-            {
+            {   
                 for (int i = 0; i < character.getNoOfZombie(); ++i) {
                     if (getmapobject[x][oriX] == zombie[i]) {
                         if (zombieAttribute[i][0] >= alienAttribute[1]) {
                             character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
-                            gameboard.display();
-                            character.display();
+                            cout << endl << "Alien hits a zombie." << endl;
                             cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
                             cout << "Ending Alien's turn." << endl;
+                            flagEnd = 1;
+                            pauCle::Pause();
+                            pauCle::ClearScreen();
                             break;
                         }
                     }
                 }
-                break;
+                if (flagEnd == 1) {
+                    flagEnd = 0;
+                    break;
+                }
             }
             gameboard.characterOnMap(alienAttribute[3],alienAttribute[4],'#');
             character.setAlienLocation(alienAttribute[3],alienAttribute[4]+1);
@@ -612,15 +637,20 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
                     if (getmapobject[x][oriX] == zombie[i]) {
                         if (zombieAttribute[i][0] >= alienAttribute[1]) {
                             character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
-                            gameboard.display();
-                            character.display();
+                            cout << endl << "Alien hits a zombie." << endl;
                             cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
                             cout << "Ending Alien's turn." << endl;
+                            flagEnd = 1;
+                            pauCle::Pause();
+                            pauCle::ClearScreen();
                             break;
                         }
                     }
                 }
-                break;
+                if (flagEnd == 1) {
+                    flagEnd = 0;
+                    break;
+                }
             }
             gameboard.characterOnMap(alienAttribute[3],alienAttribute[4],'#');
             character.setAlienLocation(alienAttribute[3],alienAttribute[4]+1);
@@ -636,6 +666,27 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
             character.display();
             right(gameboard,character,obj);
             break;
+        }
+        else
+        {
+            for (int i = 0; i < character.getNoOfZombie(); ++i) {
+                if (getmapobject[x][oriX] == zombie[i]) {
+                    if (zombieAttribute[i][0] >= alienAttribute[1]) {
+                        character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
+                        cout << endl << "Alien hits a zombie." << endl;
+                        cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
+                        cout << "Ending Alien's turn." << endl;
+                        flagEnd = 1;
+                        pauCle::Pause();
+                        pauCle::ClearScreen();
+                        break;
+                    }
+                }
+            }
+            if (flagEnd == 1) {
+                flagEnd = 0;
+                break;
+            }
         }
         gameboard.characterOnMap(alienAttribute[3], alienAttribute[4],'#');
         character.setAlienLocation(alienAttribute[3],alienAttribute[4] + 1);
@@ -655,6 +706,7 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
 
 void Command :: down(GameBoard &gameboard, Character &character, char** obj)
 {
+    bool flagEnd = 0;
     int *alienAttribute = character.getAlienAttribute() ;
     int **zombieAttribute = character.getZombieAttribute();
     int oriX = alienAttribute[3] - 1;
@@ -771,15 +823,20 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
                     if (getmapobject[x][oriX] == zombie[i]) {
                         if (zombieAttribute[i][0] >= alienAttribute[1]) {
                             character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
-                            gameboard.display();
-                            character.display();
+                            cout << endl << "Alien hits a zombie." << endl;
                             cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
                             cout << "Ending Alien's turn." << endl;
+                            flagEnd = 1;
+                            pauCle::Pause();
+                            pauCle::ClearScreen();
                             break;
                         }
                     }
                 }
-                break;
+                if (flagEnd == 1) {
+                    flagEnd = 0;
+                    break;
+                }
             }
             cout << endl << "Changing direction. Going Up!" << endl;
             pauCle::Pause();
@@ -816,15 +873,20 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
                     if (getmapobject[x][oriX] == zombie[i]) {
                         if (zombieAttribute[i][0] >= alienAttribute[1]) {
                             character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
-                            gameboard.display();
-                            character.display();
+                            cout << endl << "Alien hits a zombie." << endl;
                             cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
                             cout << "Ending Alien's turn." << endl;
+                            flagEnd = 1;
+                            pauCle::Pause();
+                            pauCle::ClearScreen();
                             break;
                         }
                     }
                 }
-                break;
+                if (flagEnd == 1) {
+                    flagEnd = 0;
+                    break;
+                }
             }
             pauCle::Pause();
             pauCle::ClearScreen();
@@ -861,15 +923,20 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
                     if (getmapobject[x][oriX] == zombie[i]) {
                         if (zombieAttribute[i][0] >= alienAttribute[1]) {
                             character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
-                            gameboard.display();
-                            character.display();
+                            cout << endl << "Alien hits a zombie." << endl;
                             cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
                             cout << "Ending Alien's turn." << endl;
+                            flagEnd = 1;
+                            pauCle::Pause();
+                            pauCle::ClearScreen();
                             break;
                         }
                     }
                 }
-                break;
+                if (flagEnd == 1) {
+                    flagEnd = 0;
+                    break;
+                }
             }
             cout << endl << "Changing direction. Going Left!" << endl;
             pauCle::Pause();
@@ -907,15 +974,20 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
                     if (getmapobject[x][oriX] == zombie[i]) {
                         if (zombieAttribute[i][0] >= alienAttribute[1]) {
                             character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
-                            gameboard.display();
-                            character.display();
+                            cout << endl << "Alien hits a zombie." << endl;
                             cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
                             cout << "Ending Alien's turn." << endl;
+                            flagEnd = 1;
+                            pauCle::Pause();
+                            pauCle::ClearScreen();
                             break;
                         }
                     }
                 }
-                break;
+                if (flagEnd == 1) {
+                    flagEnd = 0;
+                    break;
+                }
             }
             cout << endl << "Changing direction. Going Right!" << endl;
             pauCle::Pause();
@@ -925,6 +997,27 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
             character.display();
             right(gameboard,character,obj);
             break;
+        }
+        else
+        {
+            for (int i = 0; i < character.getNoOfZombie(); ++i) {
+                if (getmapobject[x][oriX] == zombie[i]) {
+                    if (zombieAttribute[i][0] >= alienAttribute[1]) {
+                        character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
+                        cout << endl << "Alien hits a zombie." << endl;
+                        cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
+                        cout << "Ending Alien's turn." << endl;
+                        flagEnd = 1;
+                        pauCle::Pause();
+                        pauCle::ClearScreen();
+                        break;
+                    }
+                }
+            }
+            if (flagEnd == 1) {
+                flagEnd = 0;
+                break;
+            }
         }
         gameboard.characterOnMap(alienAttribute[3],alienAttribute[4],'#');
         character.setAlienLocation(alienAttribute[3],alienAttribute[4]-1);
@@ -942,6 +1035,7 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
 
 void Command :: left(GameBoard &gameboard, Character &character, char** obj)
 {
+    bool flagEnd = 0;
     int *alienAttribute = character.getAlienAttribute() ;
     int **zombieAttribute = character.getZombieAttribute();
     int oriX = alienAttribute[3] - 1;
@@ -1056,18 +1150,23 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
             else
             {
                 for (int i = 0; i < character.getNoOfZombie(); ++i) {
-                    if (getmapobject[oriY][x] == zombie[i]) {
+                    if (getmapobject[oriY-1][x] == zombie[i]) {
                         if (zombieAttribute[i][0] >= alienAttribute[1]) {
                             character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
-                            gameboard.display();
-                            character.display();
+                            cout << endl << "Alien hits a zombie." << endl;
                             cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
                             cout << "Ending Alien's turn." << endl;
+                            flagEnd = 1;
+                            pauCle::Pause();
+                            pauCle::ClearScreen();
                             break;
                         }
                     }
                 }
-                break;
+                if (flagEnd == 1) {
+                    flagEnd = 0;
+                    break;
+            }
             }
             cout << endl << "Changing direction. Going Up!" << endl;
             pauCle::Pause();
@@ -1105,13 +1204,19 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
                     if (getmapobject[oriY][x] == zombie[i]) {
                         if (zombieAttribute[i][0] >= alienAttribute[1]) {
                             character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
-                            gameboard.display();
-                            character.display();
+                            cout << endl << "Alien hits a zombie." << endl;
                             cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
                             cout << "Ending Alien's turn." << endl;
+                            flagEnd = 1;
+                            pauCle::Pause();
+                            pauCle::ClearScreen();
                             break;
                         }
                     }
+                }
+                if (flagEnd == 1) {
+                    flagEnd = 0;
+                    break;
                 }
             }
             cout << endl << "Changing direction. Going Down!" << endl;
@@ -1147,18 +1252,22 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
             else
             {
                 for (int i = 0; i < character.getNoOfZombie(); ++i) {
-                    if (getmapobject[oriY][x] == zombie[i]) {
+                    if (getmapobject[oriY][x-1] == zombie[i]) {
                         if (zombieAttribute[i][0] >= alienAttribute[1]) {
                             character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
-                            gameboard.display();
-                            character.display();
-                            cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
+                            cout << endl << "Alien hits a zombie." << endl;
                             cout << "Ending Alien's turn." << endl;
+                            flagEnd = 1;
+                            pauCle::Pause();
+                            pauCle::ClearScreen();
                             break;
                         }
                     }
                 }
-                break;
+                if (flagEnd == 1) {
+                    flagEnd = 0;
+                    break;
+                }
             }
             pauCle::Pause();
             pauCle::ClearScreen();
@@ -1192,18 +1301,23 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
             else
             {
                 for (int i = 0; i < character.getNoOfZombie(); ++i) {
-                    if (getmapobject[oriY][x] == zombie[i]) {
+                    if (getmapobject[oriY][x+1] == zombie[i]) {
                         if (zombieAttribute[i][0] >= alienAttribute[1]) {
                             character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
-                            gameboard.display();
-                            character.display();
+                            cout << endl << "Alien hits a zombie." << endl;
                             cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
                             cout << "Ending Alien's turn." << endl;
+                            flagEnd = 1;
+                            pauCle::Pause();
+                            pauCle::ClearScreen();
                             break;
                         }
                     }
                 }
-                break;
+                if (flagEnd == 1) {
+                    flagEnd = 0;
+                    break;
+                }
             }
             cout << endl << "Changing direction. Going Right!" << endl;
             pauCle::Pause();
@@ -1213,6 +1327,27 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
             character.display();
             right(gameboard,character,obj);
             break;
+        }
+        else
+        {
+            for (int i = 0; i < character.getNoOfZombie(); ++i) {
+                if (getmapobject[oriY][x] == zombie[i]) {
+                    if (zombieAttribute[i][0] >= alienAttribute[1]) {
+                        character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
+                        cout << endl << "Alien hits a zombie." << endl;
+                        cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
+                        cout << "Ending Alien's turn." << endl;
+                        flagEnd = 1;
+                        pauCle::Pause();
+                        pauCle::ClearScreen();
+                        break;
+                    }
+                }
+            }
+            if (flagEnd == 1) {
+                flagEnd = 0;
+                break;
+            }
         }
         gameboard.characterOnMap(alienAttribute[3],alienAttribute[4],'#');
         character.setAlienLocation(alienAttribute[3]-1,alienAttribute[4]);
@@ -1230,6 +1365,7 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
 
 void Command :: right (GameBoard &gameboard, Character &character, char** obj)
 {
+    bool flagEnd = 0;
     int *alienAttribute = character.getAlienAttribute() ;
     int **zombieAttribute = character.getZombieAttribute();
     int oriX = alienAttribute[3] - 1;
@@ -1248,7 +1384,7 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
                 pauCle::Pause();
                 pauCle::ClearScreen();
                 break;
-            }
+        }
 
         if (getmapobject[oriY][x] == ' ')
         {
@@ -1345,18 +1481,23 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
             else
             {
                 for (int i = 0; i < character.getNoOfZombie(); ++i) {
-                    if (getmapobject[oriY][x] == zombie[i]) {
+                    if (getmapobject[oriY-1][x] == zombie[i]) {
                         if (zombieAttribute[i][0] >= alienAttribute[1]) {
                             character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
-                            gameboard.display();
-                            character.display();
+                            cout << endl << "Alien hits a zombie." << endl;
                             cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
                             cout << "Ending Alien's turn." << endl;
+                            flagEnd = 1;
+                            pauCle::Pause();
+                            pauCle::ClearScreen();
                             break;
                         }
                     }
                 }
-                break;
+                if (flagEnd == 1) {
+                    flagEnd = 0;
+                    break;
+                }
             }
             cout << endl << "Changing direction. Going Up!" << endl;
             pauCle::Pause();
@@ -1397,13 +1538,19 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
                     if (getmapobject[oriY + 1][x] == zombie[i]) {
                         if (zombieAttribute[i][0] >= alienAttribute[1]) {
                             character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
-                            gameboard.display();
-                            character.display();
+                            cout << endl << "Alien hits a zombie." << endl;
                             cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
                             cout << "Ending Alien's turn." << endl;
+                            flagEnd = 1;
+                            pauCle::Pause();
+                            pauCle::ClearScreen();
                             break;
                         }
                     }
+                }
+                if (flagEnd == 1) {
+                    flagEnd = 0;
+                    break;
                 }
             }
             gameboard.display();
@@ -1435,18 +1582,23 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
             else
             {
                 for (int i = 0; i < character.getNoOfZombie(); ++i) {
-                    if (getmapobject[oriY][x] == zombie[i]) {
+                    if (getmapobject[oriY][x-1] == zombie[i]) {
                         if (zombieAttribute[i][0] >= alienAttribute[1]) {
                             character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
-                            gameboard.display();
-                            character.display();
+                            cout << endl << "Alien hits a zombie." << endl;
                             cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
                             cout << "Ending Alien's turn." << endl;
+                            flagEnd = 1;
+                            pauCle::Pause();
+                            pauCle::ClearScreen();
                             break;
                         }
                     }
                 }
-                break;
+                if (flagEnd == 1) {
+                    flagEnd = 0;
+                    break;
+                }
             }
             cout << endl << "Changing direction. Going Left!" << endl;
             pauCle::Pause();
@@ -1481,18 +1633,23 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
             else
             {
                 for (int i = 0; i < character.getNoOfZombie(); ++i) {
-                    if (getmapobject[oriY][x] == zombie[i]) {
+                    if (getmapobject[oriY][x+1] == zombie[i]) {
                         if (zombieAttribute[i][0] >= alienAttribute[1]) {
                             character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
-                            gameboard.display();
-                            character.display();
+                            cout << endl << "Alien hits a zombie." << endl;
                             cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
                             cout << "Ending Alien's turn." << endl;
+                            flagEnd = 1;
+                            pauCle::Pause();
+                            pauCle::ClearScreen();
                             break;
                         }
                     }
                 }
-                break;
+                if (flagEnd == 1) {
+                    flagEnd = 0;
+                    break;
+                }
             }
             pauCle::Pause();
             pauCle::ClearScreen();
@@ -1501,6 +1658,27 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
             character.display();
             right(gameboard,character,obj);
             break;
+        }
+        else
+        {
+            for (int i = 0; i < character.getNoOfZombie(); ++i) {
+                if (getmapobject[oriY][x] == zombie[i]) {
+                    if (zombieAttribute[i][0] >= alienAttribute[1]) {
+                        character.setZombieHealth(i, zombieAttribute[i][0] - alienAttribute[1]);
+                        cout << endl << "Alien hits a zombie." << endl;
+                        cout << "Zombie " << zombie[i] << " loses " << alienAttribute[1] << " health." << endl;
+                        cout << "Ending Alien's turn." << endl;
+                        flagEnd = 1;
+                        pauCle::Pause();
+                        pauCle::ClearScreen();
+                        break;
+                    }
+                }
+            }
+            if (flagEnd == 1) {
+                flagEnd = 0;
+                break;
+            }
         }
         gameboard.characterOnMap(alienAttribute[3],alienAttribute[4],'#');
         character.setAlienLocation(alienAttribute[3]+1,alienAttribute[4]);
