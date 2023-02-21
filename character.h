@@ -25,12 +25,13 @@ public:
     int* getAlienAttribute();
     int** getZombieAttribute();
     int getNoOfZombie();
-    void zombieMovement();
+    void setCo(int x, int y);
     void setNoOfZombies(int zombies);
     void setAlienLocation(int x, int y);
     void setAlienHealth(int health);
     void setAlienAttack(int damage);
     void setZombieHealth(int whichzombie, int health);
+    void setZombieLocation(int whichzombie, int x, int y);
     void loadAlienAttribute(int health, int damage, int range, int x, int y);
     void loadZombieAttribute(int number, int health, int damage, int range, int x, int y);
 };

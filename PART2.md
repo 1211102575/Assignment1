@@ -2,7 +2,7 @@
 
 ## Video Demo
 
-Please provide the YouTube link to your [Video Demo](https://youtube.com).
+Please provide the YouTube link to your [Video Demo] https://youtu.be/mt2tcfLPcgI.
 
 ## Minimum Requirements
 
@@ -18,13 +18,6 @@ List all the features completed.
 6. Game Control Command(up, down, left, right, help)
 7. Alien's stopping and attack
 8. Zombie's attck
-
-### To Do
-
-List all the features not yet done. Remove this section if there is no incomplete requirements.
-
-1. Quit
-2. zombie movement
 
 ## Contributions
 

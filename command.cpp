@@ -344,14 +344,25 @@ void Command::quit() {
     }
 }
 
-void Command:: gameend(Character &character)
+void Command:: gameend(GameBoard &gameboard, Character &character)
 {
     int *alienAttribute = character.getAlienAttribute() ;
     int **zombieAttribute = character.getZombieAttribute();
-
+    char yn;
     if (alienAttribute[0] == 0)
-    {
+    {   
+        gameboard.display();
+        character.display();
         cout << "Zombies Win !" ;
+        flagContinue_ = 0;
+        cout << "Do you want to try again? (y/n): ";
+        cin >> yn;
+        if (yn == 'y') {
+            gameboard.gameStart();
+        }
+        else {
+            cout << "GoodBye!";
+        }
     }
     else
     {
@@ -363,6 +374,15 @@ void Command:: gameend(Character &character)
         if (total == 0)
         {
             cout << "YOU WIN!!";
+            flagContinue_ = 0;
+            cout << "Do you want to try again? (y/n): ";
+            cin >> yn;
+            if (yn == 'y') {
+                gameboard.gameStart();
+            }
+            else {
+                cout << "GoodBye!";
+            }
         }
     }
 }
@@ -387,6 +407,7 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
         }
 
@@ -419,6 +440,7 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
             }
             pauCle::Pause();
             pauCle::ClearScreen();
+            zombiemovement(gameboard, character);
             break;
         }
         
@@ -473,10 +495,18 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
             character.setAlienAttack(newDamage);
             pauCle::Pause();
             pauCle::ClearScreen();
-            if (alienAttribute[4] == gameboard.getcoY()) {
+            if (alienAttribute[4] + 1 == gameboard.getcoY()) {
+                gameboard.characterOnMap(alienAttribute[3],alienAttribute[4],'#');
+                character.setAlienLocation(alienAttribute[3],alienAttribute[4]+1);
+                int *alienAttribute = character.getAlienAttribute() ;
+                gameboard.characterOnMap(alienAttribute[3],alienAttribute[4], 'A');
+                gameboard.display();
+                character.display();
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
+                zombiemovement(gameboard, character);
                 break;
             }
             else
@@ -491,6 +521,7 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
                             flagEnd = 1;
                             pauCle::Pause();
                             pauCle::ClearScreen();
+                            zombiemovement(gameboard, character);
                             break;
                         }
                     }
@@ -523,10 +554,11 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
             character.setAlienAttack(newDamage);
             pauCle::Pause();
             pauCle::ClearScreen();
-            if (alienAttribute[4] == 1) {
+            if (alienAttribute[4] - 1 == 1) {
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
             }
             else
@@ -541,6 +573,7 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
                             flagEnd = 1;
                             pauCle::Pause();
                             pauCle::ClearScreen();
+                            zombiemovement(gameboard, character);
                             break;
                         }
                     }
@@ -578,6 +611,7 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
             }
             else
@@ -592,6 +626,7 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
                             flagEnd = 1;
                             pauCle::Pause();
                             pauCle::ClearScreen();
+                            zombiemovement(gameboard, character);
                             break;
                         }
                     }
@@ -629,6 +664,7 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
             }
             else
@@ -643,6 +679,7 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
                             flagEnd = 1;
                             pauCle::Pause();
                             pauCle::ClearScreen();
+                            zombiemovement(gameboard, character);
                             break;
                         }
                     }
@@ -679,6 +716,7 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
                         flagEnd = 1;
                         pauCle::Pause();
                         pauCle::ClearScreen();
+                        zombiemovement(gameboard, character);
                         break;
                     }
                 }
@@ -700,6 +738,7 @@ void Command::up(GameBoard &gameboard, Character &character, char** obj)
             cout << "Alien hits the border. Ending Alien's turn." << endl;
             pauCle::Pause();
             pauCle::ClearScreen();
+            zombiemovement(gameboard, character);
         }
     }
 }
@@ -723,6 +762,7 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
         }
 
@@ -754,6 +794,7 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
             }
             pauCle::Pause();
             pauCle::ClearScreen();
+            zombiemovement(gameboard, character);
             break;
         }
         
@@ -815,6 +856,7 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
             }
             else
@@ -829,6 +871,7 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
                             flagEnd = 1;
                             pauCle::Pause();
                             pauCle::ClearScreen();
+                            zombiemovement(gameboard, character);
                             break;
                         }
                     }
@@ -865,6 +908,7 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
             }
             else
@@ -879,6 +923,7 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
                             flagEnd = 1;
                             pauCle::Pause();
                             pauCle::ClearScreen();
+                            zombiemovement(gameboard, character);
                             break;
                         }
                     }
@@ -915,6 +960,7 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
             }
             else
@@ -929,6 +975,7 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
                             flagEnd = 1;
                             pauCle::Pause();
                             pauCle::ClearScreen();
+                            zombiemovement(gameboard, character);
                             break;
                         }
                     }
@@ -966,6 +1013,7 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
             }
             else
@@ -980,6 +1028,7 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
                             flagEnd = 1;
                             pauCle::Pause();
                             pauCle::ClearScreen();
+                            zombiemovement(gameboard, character);
                             break;
                         }
                     }
@@ -1010,6 +1059,7 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
                         flagEnd = 1;
                         pauCle::Pause();
                         pauCle::ClearScreen();
+                        zombiemovement(gameboard, character);
                         break;
                     }
                 }
@@ -1029,6 +1079,7 @@ void Command :: down(GameBoard &gameboard, Character &character, char** obj)
             cout << "Alien hits the border. Ending Alien's turn." << endl;
             pauCle::Pause();
             pauCle::ClearScreen();
+            zombiemovement(gameboard, character);
         }
     }
 }
@@ -1052,6 +1103,7 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
                 cout << endl << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
         }
 
@@ -1083,6 +1135,7 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
             }
             pauCle::Pause();
             pauCle::ClearScreen();
+            zombiemovement(gameboard, character);
             break;
         }
 
@@ -1145,6 +1198,7 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
             }
             else
@@ -1159,6 +1213,7 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
                             flagEnd = 1;
                             pauCle::Pause();
                             pauCle::ClearScreen();
+                            zombiemovement(gameboard, character);
                             break;
                         }
                     }
@@ -1196,6 +1251,7 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
             }
             else
@@ -1210,6 +1266,7 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
                             flagEnd = 1;
                             pauCle::Pause();
                             pauCle::ClearScreen();
+                            zombiemovement(gameboard, character);
                             break;
                         }
                     }
@@ -1247,6 +1304,7 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
                 cout << endl << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
             }
             else
@@ -1260,6 +1318,7 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
                             flagEnd = 1;
                             pauCle::Pause();
                             pauCle::ClearScreen();
+                            zombiemovement(gameboard, character);
                             break;
                         }
                     }
@@ -1296,6 +1355,7 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
             }
             else
@@ -1310,6 +1370,7 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
                             flagEnd = 1;
                             pauCle::Pause();
                             pauCle::ClearScreen();
+                            zombiemovement(gameboard, character);
                             break;
                         }
                     }
@@ -1340,6 +1401,7 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
                         flagEnd = 1;
                         pauCle::Pause();
                         pauCle::ClearScreen();
+                        zombiemovement(gameboard, character);
                         break;
                     }
                 }
@@ -1359,6 +1421,7 @@ void Command :: left(GameBoard &gameboard, Character &character, char** obj)
             cout << "Alien hits the border. Ending Alien's turn." << endl;
             pauCle::Pause();
             pauCle::ClearScreen();
+            zombiemovement(gameboard, character);
         }
     }
 }
@@ -1383,6 +1446,7 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
         }
 
@@ -1414,6 +1478,7 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
             }
             pauCle::Pause();
             pauCle::ClearScreen();
+            zombiemovement(gameboard, character);
             break;
         }
     
@@ -1457,7 +1522,6 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
             int newhealth = zombieAttribute[closestZombie][0]-10;
             character.setZombieHealth(closestZombie, newhealth);
         }
-
         else if (getmapobject[oriY][x] == '^')
         {
             cout << "Alien found an ^ arrow." << endl;
@@ -1476,6 +1540,7 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
             }
             else
@@ -1490,6 +1555,7 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
                             flagEnd = 1;
                             pauCle::Pause();
                             pauCle::ClearScreen();
+                            zombiemovement(gameboard, character);
                             break;
                         }
                     }
@@ -1530,6 +1596,7 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
             }
             else
@@ -1544,6 +1611,7 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
                             flagEnd = 1;
                             pauCle::Pause();
                             pauCle::ClearScreen();
+                            zombiemovement(gameboard, character);
                             break;
                         }
                     }
@@ -1577,6 +1645,7 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
             }
             else
@@ -1591,6 +1660,7 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
                             flagEnd = 1;
                             pauCle::Pause();
                             pauCle::ClearScreen();
+                            zombiemovement(gameboard, character);
                             break;
                         }
                     }
@@ -1628,6 +1698,7 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
                 cout << "Alien hits the border. Ending Alien's turn." << endl;
                 pauCle::Pause();
                 pauCle::ClearScreen();
+                zombiemovement(gameboard, character);
                 break;
             }
             else
@@ -1642,6 +1713,7 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
                             flagEnd = 1;
                             pauCle::Pause();
                             pauCle::ClearScreen();
+                            zombiemovement(gameboard, character);
                             break;
                         }
                     }
@@ -1671,6 +1743,7 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
                         flagEnd = 1;
                         pauCle::Pause();
                         pauCle::ClearScreen();
+                        zombiemovement(gameboard, character);
                         break;
                     }
                 }
@@ -1690,6 +1763,7 @@ void Command :: right (GameBoard &gameboard, Character &character, char** obj)
             cout << "Alien hits the border. Ending Alien's turn." << endl;
             pauCle::Pause();
             pauCle::ClearScreen();
+            zombiemovement(gameboard, character);
         }
     }
 }
@@ -1700,90 +1774,113 @@ void Command :: zombiemovement(GameBoard &gameboard, Character &character )
     int **zombieAttribute = character.getZombieAttribute();
     int *alienAttribute = character.getAlienAttribute();
     string direction[4] =  {"up","down","left","right"};
-    int which = rand() % 4;
     for (int i = 0 ; i < numOfZombie ; ++i)
     {
-    
+        gameboard.display();
+        character.display();
+        int which = rand() % 4;
+        cout << "Zombie " << i + 1 << "'s turn." << endl; 
         int attackRange = zombieAttribute[i][2] ;
         if(direction[which]== "up")
         {
+            gameboard.characterOnMap(zombieAttribute[i][3], zombieAttribute[i][4], ' ');
             zombieAttribute[i][4] +=1;
             cout << "Zombie " << i + 1 << " moves up." << endl;
-            pauCle::Pause();
-            pauCle::ClearScreen();
         }
         else if(direction[which]== "down")
         {
+            gameboard.characterOnMap(zombieAttribute[i][3], zombieAttribute[i][4], ' ');
             zombieAttribute[i][4] -=1;
             cout << "Zombie " << i + 1 << " moves down." << endl;
-            pauCle::Pause();
-            pauCle::ClearScreen();
         }
         else if (direction [which] == "left")
         {
+            gameboard.characterOnMap(zombieAttribute[i][3], zombieAttribute[i][4], ' ');
             zombieAttribute[i][3] -=1;
             cout << "Zombie " << i + 1 << " moves left." << endl;
-            pauCle::Pause();
-            pauCle::ClearScreen();
         }
         else if (direction [which] == "right")
         {
+            gameboard.characterOnMap(zombieAttribute[i][3], zombieAttribute[i][4], ' ');
             zombieAttribute[i][3] +=1;
             cout << "Zombie " << i + 1 << " moves right." << endl;
-            pauCle::Pause();
-            pauCle::ClearScreen();
         }
-        gameboard.characterOnMap(zombieAttribute[i][3], zombieAttribute[i][4], i+1);
+        gameboard.characterOnMap(zombieAttribute[i][3], zombieAttribute[i][4], '1' + i);
+        pauCle::Pause();
+        pauCle::ClearScreen();
+        gameboard.display();
+        character.display();
+        
         if (((zombieAttribute[i][3] + 1) == alienAttribute[3]) && (zombieAttribute[i][4] == alienAttribute[4])) 
         {
             alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
+            cout << "Zombie " << i + 1 << " attacks." << endl;
         }
         else if (((zombieAttribute[i][3] - 1) == alienAttribute[3]) && (zombieAttribute[i][4] == alienAttribute[4]))
         {
             alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
+            cout << "Zombie " << i + 1 << " attacks." << endl;
         }
         else if (((zombieAttribute[i][3]) == alienAttribute[3]) && (zombieAttribute[i][4] + 1 == alienAttribute[4]))
         {
             alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
+            cout << "Zombie " << i + 1 << " attacks." << endl;
         }
         else if (((zombieAttribute[i][3]) == alienAttribute[3]) && (zombieAttribute[i][4] - 1 == alienAttribute[4]))
         {
             alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
+            cout << "Zombie " << i + 1 << " attacks." << endl;
         }
-        for (int j = 1; j < attackRange; ++j) 
+        else if (attackRange > 1) 
         {
-            if (((zombieAttribute[i][3] + j) == alienAttribute[3]) && (zombieAttribute[i][4] + j == alienAttribute[4]))
-            {
-                alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
-            }
-            else if (((zombieAttribute[i][3] + j) == alienAttribute[3]) && (zombieAttribute[i][4] - j == alienAttribute[4]))
-            {
-                alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
-            }
-            else if (((zombieAttribute[i][3] - j) == alienAttribute[3]) && (zombieAttribute[i][4] - j == alienAttribute[4]))
-            {
-                alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
-            }
-            else if (((zombieAttribute[i][3] + j) == alienAttribute[3]) && (zombieAttribute[i][4] + j == alienAttribute[4]))
-            {
-                alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
-            }
-            else if (((zombieAttribute[i][3] + j + 1) == alienAttribute[3]) && (zombieAttribute[i][4] == alienAttribute[4])) 
-            {
-                alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
-            }
-            else if (((zombieAttribute[i][3] - j - 1) == alienAttribute[3]) && (zombieAttribute[i][4] == alienAttribute[4]))
-            {
-                alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
-            }
-            else if (((zombieAttribute[i][3]) == alienAttribute[3]) && (zombieAttribute[i][4] + j + 1 == alienAttribute[4]))
-            {
-                alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
-            }
-            else if (((zombieAttribute[i][3]) == alienAttribute[3]) && (zombieAttribute[i][4] - j - 1 == alienAttribute[4]))
-            {
-                alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
+            for (int j = 1; j < attackRange; ++j) 
+            {   
+                for (int k = 1; k < attackRange; ++k)
+                {
+                    if (zombieAttribute[i][4] + j == alienAttribute[4] && (zombieAttribute[i][3] + k == alienAttribute[3] || zombieAttribute[i][3] - k == alienAttribute[3]))
+                    {
+                        alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
+                        cout << "Zombie " << i + 1 << " attacks." << endl;
+                        break;
+                    }
+                    else if (zombieAttribute[i][4] - j == alienAttribute[4] && (zombieAttribute[i][3] + k == alienAttribute[3] || zombieAttribute[i][3] - k == alienAttribute[3]))
+                    {
+                        alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
+                        cout << "Zombie " << i + 1 << " attacks." << endl;
+                        break;
+                    }
+                    else if (((zombieAttribute[i][3] + j + 1) == alienAttribute[3]) && (zombieAttribute[i][4] == alienAttribute[4])) 
+                    {
+                        alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
+                        cout << "Zombie " << i + 1 << " attacks." << endl;
+                        break;
+                    }
+                    else if (((zombieAttribute[i][3] - j - 1) == alienAttribute[3]) && (zombieAttribute[i][4] == alienAttribute[4]))
+                    {
+                        alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
+                        cout << "Zombie " << i + 1 << " attacks." << endl;
+                        break;
+                    }
+                    else if (((zombieAttribute[i][3]) == alienAttribute[3]) && (zombieAttribute[i][4] + j + 1 == alienAttribute[4]))
+                    {
+                        alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
+                        cout << "Zombie " << i + 1 << " attacks." << endl;
+                        break;
+                    }
+                    else if (((zombieAttribute[i][3]) == alienAttribute[3]) && (zombieAttribute[i][4] - j - 1 == alienAttribute[4]))
+                    {
+                        alienAttribute[0] = alienAttribute[0] - zombieAttribute[i][1];
+                        cout << "Zombie " << i + 1 << " attacks." << endl;
+                        break;
+                    }
+                }
             }
         }
+        else {
+            cout << "Alien not in range." << endl;
+        }
+        character.setAlienHealth(alienAttribute[0]);
+        pauCle::Pause();
+        pauCle::ClearScreen();
     }
 }

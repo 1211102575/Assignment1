@@ -16,6 +16,7 @@ using namespace std;
 
 int main()
 {
+    srand(time(NULL));
     GameBoard board;
     board.gameStart();
     int x = board.getcoX();
@@ -79,6 +80,11 @@ int main()
         }
         else if (flagLoad == 1) {
             cmd.load(board, character);
+            x = board.getcoX();
+            y = board.getcoY();
+            z = board.getnoOfZombies();
         }
+        cmd.gameend(board, character);
+        flagContinue = cmd.getFlagContinue();
     } while(flagContinue == 1);
 }

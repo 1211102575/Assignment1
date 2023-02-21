@@ -123,7 +123,7 @@ void GameBoard::init(int coX, int coY, int noOfZombies, bool cleanUp) {
     coX_ = coX;
     coY_ = coY;
     noOfZombies_ = noOfZombies;
-
+    
     char objects[] = {' ', ' ', ' ', '^', 'v', '<', '>', 'h', 'p', 'r'};
     int noOfObjects = 10;
 
@@ -195,9 +195,3 @@ void GameBoard::display() const {
 void GameBoard::characterOnMap(int x, int y, char ch) {
     coordinate_[coY_ - y][x - 1] = ch;
 }
-
-
-// int main() {
-//     GameBoard board;
-
-// }

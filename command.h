@@ -37,10 +37,9 @@ public:
     bool getFlagSave();
     bool getFlagLoad();
 
-    void gameend(Character &character);
+    void gameend(GameBoard &gameboard, Character &character);
 
-    void up(GameBoard &gameboard,Character &character, char** obj);
-    // void movement();
+    void up(GameBoard &gameboard, Character &character, char** obj);
     void arrows(GameBoard &gameboard, int x, int y);
     void help();
     void save(GameBoard &gameboard, Character &character);

@@ -17,6 +17,12 @@ Character::Character(int x, int y, int z)
     init();
 }
 
+void Character::setCo(int x, int y)
+{
+    coX_ = x;
+    coY_ = y;
+}
+
 //map rowcolumnnumber
 void Character::setAlienLocation(int x, int y)
 {
@@ -40,6 +46,11 @@ void Character::setNoOfZombies(int zombies) {
 void Character::setZombieHealth(int whichzombie, int health)
 {
     zombieAttribute_[whichzombie][0] = health;
+}
+
+void Character::setZombieLocation(int whichzombie, int x, int y) {
+    zombieAttribute_[whichzombie][3] = x;
+    zombieAttribute_[whichzombie][4] = y;
 }
 
 void Character::loadAlienAttribute(int health, int damage, int range, int x, int y){
@@ -153,7 +164,7 @@ void Character::init(bool load) {
             zombieAttribute_[i][2] = zombieRange[range];
         }
     }
-    
+    load = 0;
 }
 
 
@@ -186,29 +197,3 @@ int Character ::getNoOfZombie()
 {
     return noOfZombies_;
 }
-
-
-// void Character::zombieMovement() {
-//     for (int i = 0; i < noOfZombies_; ++i) {
-//         int zomNext = zombieAttribute_[i][3] +  
-//     }
-// }
-// void isEMpty ()
-// {
-// }
-
-// int main() {
-//     srand(1);
-//     GameBoard board;
-//     board.gameStart();
-//     int x = board.getcoX();
-//     int y = board.getcoY();
-//     int z = board.getnoOfZombies();
-//     char **obj = board.getMapObjects();
-
-//     Character character(x, y, z);
-//     character.onMap(board);
-//     board.display();
-//     character.display();
-
-// }
